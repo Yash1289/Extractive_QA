@@ -1,0 +1,19 @@
+.check {
+    position: relative;
+    left: 0px;
+    transform: all 0.3s ease;
+}
+
+.Wrapper{
+    min-height: 85vh;
+    min-width: 45%;
+    display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.title{
+    font-size: 0.8em;
+    font-weight: 400;
+}
