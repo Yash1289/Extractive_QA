@@ -1,4 +1,4 @@
-import React , { useState , useReducer} from "react";
+import React , { useReducer} from "react";
 import './Base_form.component.css'
 
 const formReducer = (state , event) => {
@@ -17,12 +17,13 @@ const formReducer = (state , event) => {
 function BaseForm({AppToBase , isloading }) {
 
     const [formData , setFormData ] = useReducer(formReducer , {} )
-    const [answer , setAnswer] = useState("")
-    const [submitting , setSubmitting] = useState(false)
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        setSubmitting(true)
+        AppToBase({
+            Question : "",
+            Answer : ""
+        })
         isloading(true)
 
         const Q_mode = {
@@ -37,7 +38,6 @@ function BaseForm({AppToBase , isloading }) {
             body: JSON.stringify(Q_mode)
         })
         response = await response.json();
-        setAnswer(response)
         
         AppToBase({
             Question : formData.Question,
@@ -46,7 +46,6 @@ function BaseForm({AppToBase , isloading }) {
         isloading(false)
         
         setTimeout(() => {
-            setSubmitting(false)
             setFormData({
                 reset: true
             })
@@ -54,7 +53,7 @@ function BaseForm({AppToBase , isloading }) {
                 Question : null,
                 Answer : null
             })
-        } , 20000) 
+        } , 25000) 
     }
 
     const handleChange = event => {
@@ -67,10 +66,8 @@ function BaseForm({AppToBase , isloading }) {
     var position
 
     const changePosition = (e) => {
-        //console.log(!formData.Question , !formData.Answering_Method)
         if (!formData.Question || (!formData.Answering_Method)){
             position ? (position = 0) : (position = 100);
-            //console.log(position)
             e.target.style.transform = `translate(${position}px, 0px)`;
             e.target.style.transform = "all 0.3s ease";
         }
@@ -84,7 +81,7 @@ function BaseForm({AppToBase , isloading }) {
 
     return (
         <div className="Wrapper border rounded bg-light p-3">
-            <h2 className="mb-5">Get Answers To Your Sawals</h2>
+            <h2 className="mb-5 Banner">ANSWER ME!</h2>
             <form onSubmit={handleSubmit}>
                 <fieldset className="mb-2 w-75 m-auto pb-3">
                     <label className="form-label text-muted pb-3" htmlFor="QuestionControl" >Question</label>

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import BaseForm from './Components/Base_form.component';
 import ResultWindow from './Components/Result_Window.component';
@@ -13,11 +12,8 @@ function App() {
 
   const setValues = (data) => {
 
-    console.log(data.Question , data.Answer)
     setQuestion(data.Question)
     setAnswer(data.Answer)
-
-    console.log("from app.js" , answer , question)
   }
 
   const loadingState = (condition) => {

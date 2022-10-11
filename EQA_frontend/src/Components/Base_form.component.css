@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Warnes&display=swap');
+
+
 .check {
     position: relative;
     left: 0px;
@@ -6,14 +9,20 @@
 
 .Wrapper{
     min-height: 85vh;
-    min-width: 45%;
+    min-width: 45vmax;
     display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
+   background-color: #3B3B3B;
 }
 
 .title{
     font-size: 0.8em;
     font-weight: 400;
+}
+
+.Banner{
+    font-family: 'Warnes', cursive;
+    font-weight: 700;
 }
