@@ -2,14 +2,17 @@
 
 # dependencies
 EQA_frontend/node_modules
+EQA_frontend/build
 EQA_frontend/.pnp
 .pnp.js
 
 # testing
 EQA_frontend/coverage
 
+/.env
+/env
 # production
-EQA_frontend/build
+#EQA_frontend/build
 
 # misc
 .DS_Store
