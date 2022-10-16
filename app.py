@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import numpy as np
 from requests import request
+import io
 
 from Utils.AnswerExtractor import AnswerExtractor
 from Utils.DocumentRetrieval import DocumentRetrieval
@@ -43,13 +44,16 @@ answer_extractor = AnswerExtractor(QA_MODEL, QA_MODEL)
 def pUpload():
     if request.method == "POST":
         f = request.files['file_from_react']
-        if f:
+        if f and (f.filename).endswith(".pdf"):
             filename = secure_filename(f.filename)
             global file_path
             file_path = os.path.join('temp_files', filename)
             f.save(file_path)
+            return { "Status" : "Successfully Uploaded"} , 201
+        else:
+            return {"Status" : "Error encountered"} , 500
     
-    return { "Status" : "Successfully Uploaded"} , 201
+    
 
 @app.route('/answer-question' , methods = ['POST'])
 @cross_origin()
@@ -61,41 +65,44 @@ def eqa():
 
     query = query_processor.generate_query(question)
     k_words = 2000
-
-    if usePdf:
-        passages = PdfExtractor(file_path) 
-        passages = [ re.sub(r"\n","", passage) for passage in passages]
-        os.remove(file_path)
-        min_tokens = 15
-    elif answering_method == "Sentence_Embedding":
-        docs = document_retriever.search(query, -1)
-        passages = passages_c.fit(docs)
-        min_tokens = 25
-    else:
-        docs = document_retriever.search(query, 2)
-        passages = passages_c.fit(docs)
-        min_tokens = 52
-        k_words = 800
+    try:
+        if usePdf:
+            passages = PdfExtractor(file_path) 
+            passages = [ re.sub(r"\n","", passage) for passage in passages]
+            os.remove(file_path)
+            min_tokens = 15
+        elif answering_method == "Sentence_Embedding":
+            docs = document_retriever.search(query, -1)
+            passages = passages_c.fit(docs)
+            min_tokens = 25
+        else:
+            docs = document_retriever.search(query, 2)
+            passages = passages_c.fit(docs)
+            min_tokens = 52
+            k_words = 800
     
 
-    df = pd.DataFrame(passages ,columns = ["Passage"])
-    df['tokenized'] = df['Passage'].apply(apply_all , lemma = True)
-    df = Df_Processing(df , min_tokens , k_words)
+        df = pd.DataFrame(passages ,columns = ["Passage"])
+        df['tokenized'] = df['Passage'].apply(apply_all , lemma = True)
+        df = Df_Processing(df , min_tokens , k_words)
 
-    if answering_method == "Sentence_Embedding":
+        if answering_method == "Sentence_Embedding":
 
-        passages_and_q = list(df["Passage"].values)
-        passages_and_q.append(question)
-        passages = embed_and_sim(em_model , passages_and_q)
-    else:
+            passages_and_q = list(df["Passage"].values)
+            passages_and_q.append(question)
+            passages = embed_and_sim(em_model , passages_and_q)
+        else:
 
-        dictionary,corpus,lda = train_lda(df)
-        doc_topic_dist = np.array([[tup[1] for tup in lst] for lst in lda[corpus]])
-        passages = df_maker(em_model ,df , lda, question , doc_topic_dist )
+            dictionary,corpus,lda = train_lda(df)
+            doc_topic_dist = np.array([[tup[1] for tup in lst] for lst in lda[corpus]])
+            passages = df_maker(em_model ,df , lda, question , doc_topic_dist )
 
-    answers = answer_extractor.extract(question, passages)
-    answer = [answer["answer"] for answer in answers]
-    return jsonify(answer),201
+        answers = answer_extractor.extract(question, passages)
+        answer = [answer["answer"] for answer in answers]
+        return jsonify(answer),201
+    except:
+        return { "status" : "Error encountered"},500
+    
 
 @app.route('/')
 @cross_origin()

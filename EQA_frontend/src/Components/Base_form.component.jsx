@@ -52,6 +52,7 @@ function BaseForm({AppToBase , isloading }) {
             if (responsef.status !== 201){
                 alert('Error uploading file');
                 isloading(false)
+                return
             }
         }
         
@@ -66,6 +67,7 @@ function BaseForm({AppToBase , isloading }) {
         if (response.status !== 201){
             alert('Error uploading file');
             isloading(false)
+            return
         } 
 
         AppToBase({

@@ -17,6 +17,7 @@ function PdfUpload({forwFile, showUpload }) {
         className={`fileU mb-2 ${ showUpload ? `showU` : `hideU`}`}
         type="file"
         required = {showUpload}
+        accept=".pdf"
         onClick ={(event)=> { 
           event.target.value = null
      }}
