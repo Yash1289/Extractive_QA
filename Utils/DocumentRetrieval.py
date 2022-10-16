@@ -23,10 +23,10 @@ class DocumentRetrieval:
         res = wikipedia.page(pageid=page_id)
         return res.content
 
-    def search(self, query , pages):
+    def search(self, query , pagesNo):
         pages = self.search_pages(query)
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            process_list = [executor.submit(self.search_page, page['pageid']) for page in pages['query']['search'][0:3]]
+            process_list = [executor.submit(self.search_page, page['pageid']) for page in pages['query']['search'][0:pagesNo]]
             docs = [self.post_process(p.result()) for p in process_list]
         return docs
 

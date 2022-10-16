@@ -45,13 +45,13 @@ function ResultWindow({A_found , Q_asked}){
                     </button>
                     <ul {...getCollapseProps()} className ="list-group">
                         { A_found.slice(1,5).map( (answer , index) => {
-                           return( <li class="list-group-item text-muted li_size">{answer}</li> ) ;
+                           return( <li key={index} className="list-group-item text-muted li_size">{answer}</li> ) ;
                         })}
                     </ul>
                 </div>
         </div>): 
         (<div className="R_Wrapper border rounded bg-light d-flex justify-content-around">
-                <span className="d-inline-block">The answer will show here</span>
+                <span className="d-inline-block mb-3">The answer will show here</span>
                 <RandomFacts factArr={facts}></RandomFacts>
         </div>)       
 }

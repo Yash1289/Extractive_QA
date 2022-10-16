@@ -26,3 +26,11 @@
     font-family: 'Warnes', cursive;
     font-weight: 700;
 }
+
+.sizer{
+    min-width: 95%;
+}
+
+.method{
+    min-width: 45%;
+}

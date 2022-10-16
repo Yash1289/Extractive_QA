@@ -42,7 +42,7 @@ def text_normalization(sentence , lemma = None):
         sentence = sentence.split(" ")
         text = [stemmer.stem(word) for word in sentence]
         text = [word for word in text if len(word) > 1] # make sure we have no 1 letter words
-      except IndexError: # the word "oed" broke this, so needed try except
+      except IndexError: 
         pass
       return text
 
