@@ -72,9 +72,9 @@ def eqa():
             os.remove(file_path)
             min_tokens = 15
         elif answering_method == "Sentence_Embedding":
-            docs = document_retriever.search(query, -1)
+            docs = document_retriever.search(query, 5)
             passages = passages_c.fit(docs)
-            min_tokens = 25
+            min_tokens = 30
         else:
             docs = document_retriever.search(query, 2)
             passages = passages_c.fit(docs)
