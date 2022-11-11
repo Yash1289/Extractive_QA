@@ -35,7 +35,7 @@ def pUpload():
             return {"Status" : "Error encountered"} , 500
     
     
-#Creating one post route to get the question and answers from the frontend
+#Creating one post route to get the question and answering method from the frontend
 @app.route('/answer-question' , methods = ['POST'])
 @cross_origin()
 def eqa():
