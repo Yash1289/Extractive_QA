@@ -1,12 +1,12 @@
 
-![Logo](https://i.ibb.co/58gPjTD/logo512.png)
+![Logo](https://i.ibb.co/ZmQZCGm/logo512-250x250.png)
 
 
 # Automated Question Answering System
 
 In recent years, question answering has emerged as one of the most
 popular application of nlp . Most of the companies today relies on one
-such chat bot to automatically answer the most common kind of questions asked by the
+such chat bot to automatically answer the most common kind of questions asked by their
 customer and this enables them to run a 24/7 help and support service. A similar 
 kind of system can also be used in the field of education where it can be used
 to answer questions from a research paper or from a digital book in the form of
