@@ -1,3 +1,4 @@
+#Importing all the necessary libraries
 from pdfminer3.layout import LAParams, LTTextBox
 from pdfminer3.pdfpage import PDFPage
 from pdfminer3.pdfinterp import PDFResourceManager
@@ -9,13 +10,16 @@ import io
 
 def PdfExtractor(pdfPath):
 
+    '''Function to extract the text from the pdf file stored in the provided
+    pdf file path and return them as a list of passages'''
+
     resource_manager = PDFResourceManager()
     fake_file_handle = io.StringIO()
     converter = TextConverter(resource_manager, fake_file_handle, laparams=LAParams())
     page_interpreter = PDFPageInterpreter(resource_manager, converter)
 
     with open(pdfPath, 'rb') as fh:
-
+        #Looping through the pdf pages one at a time and processing it
         for page in PDFPage.get_pages(fh,
                                   caching=True,
                                   check_extractable=True):

@@ -42,8 +42,8 @@ def df_maker(sen_model, df , lda , question , doc_topic_dist):
 def embed_and_sim(model , passages):
 
     '''
-    Function to create passages and question embedding and using that
-    calculate and return the top 10 passages similar to the question
+    Function to create passages and question embedding so to
+     return the top 10 passages similar to the question
     '''
 
     sentence_embeddings = model.encode(passages)

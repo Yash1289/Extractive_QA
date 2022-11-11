@@ -47,7 +47,7 @@ function BaseForm({AppToBase , isloading }) {
             method: 'post',
             body: file,
             }
-        );
+            );
             let res = await responsef.json();
             if (responsef.status !== 201){
                 alert('Error uploading file');
@@ -65,7 +65,7 @@ function BaseForm({AppToBase , isloading }) {
         })
         let response_result = await response.json();
         if (response.status !== 201){
-            alert('Error uploading file');
+            alert('Error encountered while fetching answers from server');
             isloading(false)
             return
         } 
@@ -84,7 +84,6 @@ function BaseForm({AppToBase , isloading }) {
                 Answer : ""
             })
         },15000)
-        // Need to figure out how to keep audience engaged like if we don't reset apptobase thing, then some issues
     }
 
     const triggertoggle =() =>{
@@ -95,7 +94,6 @@ function BaseForm({AppToBase , isloading }) {
     }
 
     const handleChange = event => {
-
 
        setFormData({
             name : event.target.name,

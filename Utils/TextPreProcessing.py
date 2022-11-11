@@ -49,7 +49,7 @@ def text_normalization(sentence , lemma = None):
 
 def apply_all(text , lemma = None):
     '''
-    This function applies all the functions above into one
+    Function to combine the results of different functions
     '''
     return text_normalization(remove_stop_words(initial_clean(text)) , lemma)
  
