@@ -4,15 +4,9 @@
 
 # Automated Question Answering System
 
-In recent years, question answering has emerged as one of the most
-popular application of nlp . Most of the companies today relies on one
-such chat bot to automatically answer the most common kind of questions asked by their
-customer and this enables them to run a 24/7 help and support service. A similar 
-kind of system can also be used in the field of education where it can be used
-to answer questions from a research paper or from a digital book in the form of
-pdf given as context . In this project we are trying to build a hybrid open cum closed domain
-question answering system where one can ask questions without providing any context or
-they can also upload a document of there liking as context and ask question related to it. 
+In recent years, question-answering has emerged as one of the most
+popular applications of NLP. Most companies today rely on one
+such chatbot to automatically answer the most common kind of questions their customer asks, enabling them to run a 24/7 help and support service. A similar kind of system can also be used in the field of education, where we can use it to answer questions from a research paper or a digital book in the form of a pdf given as context. In this project, I have built an automated question-answering system using LDA and BERT, which can be used for automated doubt-solving or as a self-service chatbot to resolve customer problems.
 
 
 ## Run Locally
@@ -60,24 +54,19 @@ Start the frontend server
 
 ## Code
 
-To retrieve the possible list of 
-answers from the given list of context we are using [DistilBERT model](https://huggingface.co/distilbert-base-cased-distilled-squad). DistilBERT is a small, fast, cheap and light Transformer model trained by distilling BERT base.
+To retrieve the possible answers from the given list of passages as context, we are using [DistilBERT model](https://huggingface.co/distilbert-base-cased-distilled-squad). DistilBERT is a small, fast, cheap and light Transformer model trained by distilling the BERT base.
 Originally BERT stands Bidirectional Encoder Representations from Transformers. It is one of the most popular and widely used NLP models. 
-BERT models can consider the full context of a word by looking at the words that come before and after it,
-which is particularly useful for understanding the intent behind the query asked. The one we are using is trained on [Stanford Question Answering Dataset (SQuAD)](https://huggingface.co/datasets/squad).
+BERT models can consider the full context of a word by looking at the words that come before and after it, which is particularly useful for understanding the intent behind the query asked. For example, the one we are using is trained on [Stanford Question Answering Dataset (SQuAD)](https://huggingface.co/datasets/squad).
 
-For open domain question answering , we are fetching wikipedia articles using the [Wikipedia Api](https://en.wikipedia.org/w/api.php) based on the question
-entered by the user and then pre processing them a bit to get chunks of different passages. 
+For open-domain question answering, we are fetching Wikipedia articles using the [Wikipedia Api](https://en.wikipedia.org/w/api.php) based on the question
+entered by the user and then pre-processing them a bit to get chunks of different passages. 
 
-For closed domain question answering in which user will supply the context , we first extract the text
-out from the pdf uploaded by the user and then perform a little pre processing to get a list of passages out from it.
+For closed domain question answering in which the user will supply the context, we first extract the text from the pdf uploaded by the user and then perform a little pre-processing to get a list of passages out from it.
 
-To filter out these passages so to remove the ones which are not so relevant to the question , or in 
-simple words to find document and question similarity we are using 
-two alternative separate methods 
+To filter out these passages so to remove the ones which are not so relevant to the question, or in simple words, to find document and question similarity, we are using two separate alternative methods. 
 
-* **Latent Dirichlet Allocation** : Using [LDA](https://radimrehurek.com/gensim/models/ldamodel.html) we first find out the list of topics from the total number of passages given and then we keep only a total number of 10 passages whose topic is most similar to the one asked in question
-* **Sentence Embedding** : In this method using a [Sentence Transformer model](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) we map both our question & paragraphs to a 384 dimensional dense vector space and then using cosine similarity we filter out 10 of the most similar passages to the question
+* **Latent Dirichlet Allocation** : We first find out the list of topics using [LDA](https://radimrehurek.com/gensim/models/ldamodel.html) from the total number of passages given, and then we keep only a total number of 10 passages whose topic is most similar to the one asked in the question.
+* **Sentence Embedding** : In this method, using a [Sentence Transformer model](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) we map both our question & paragraphs to a 384-dimensional dense vector space and then using cosine similarity we filter out 10 of the most similar passages to the question
 
 And these passages are then passed into our DistilBERT model to get the best possible answer.
 ## Screenshots
